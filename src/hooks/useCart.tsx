@@ -48,12 +48,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       setCart(cartItems);
     } catch(err) {
-      // TODO: add toast error
       const message = err.message 
         ? err.message
         : 'Erro na adição do produto';
 
-      console.error(message);
+      toast.error(message);
     }
   };
 
