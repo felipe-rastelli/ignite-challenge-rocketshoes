@@ -87,10 +87,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       await verifyProductStock(productId, amount);
 
-      const cartProducts = cart.filter(cartProduct => cartProduct.id !== productId);
-
       product.amount = amount;
-      cartProducts.push(product);
+
+      const cartProducts = cart.map(cartProduct => {
+        return (cartProduct.id !== productId) ? cartProduct : product;
+      });
 
       localStorage.setItem('@RocketShoes:cart', JSON.stringify(cartProducts));
 
