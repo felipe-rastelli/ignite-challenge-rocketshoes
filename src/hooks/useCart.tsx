@@ -113,13 +113,15 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   };
 
   function getCartProduct(productId: number): (Product | undefined) {
-    return cart.find((product => product.id === productId));
-  }
+    const product = cart.find(product => product.id === productId);
+
+    return product ? { ...product } : undefined;
+  };
 
   async function getProduct(productId: number): Promise<Product> {
     let product = getCartProduct(productId);
 
-    if(product) return { ...product };
+    if(product) return product;
 
     const { data } = await api.get(`products/${productId}`);
 
@@ -133,10 +135,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       {children}
     </CartContext.Provider>
   );
-}
+};
 
 export function useCart(): CartContextData {
   const context = useContext(CartContext);
 
   return context;
-}
+};
